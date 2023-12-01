@@ -1,0 +1,229 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12" style="text-align:left">
+        <div class="card text-left">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-12" style="text-align:left">
+                        <label class="text-dark">
+                            <h1>Employee</h1>
+                        </label>
+                        <label class="text-warning">
+                            <h1>Details</h1>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <!-- <div class="container"> -->
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                   
+                                    <form class="card p-2 bg-light" autocomplete="off" [formGroup]="employeeForm">
+                                        <div class="row ">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label id="label">First Name</label>
+                                                    <input type="text" name="firstname" id="txtfirstname" [(ngModel)]="firstname"
+                                                        formControlName="firstname"
+                                                        [class.is-invalid]="employeeForm.get('firstname').invalid && employeeForm.get('firstname').touched"
+                                                        class="form-control form-control-sm text-left" placeholder="firstname" value="" required="">
+                                                    <div *ngIf="FirstName.invalid || FirstName.touched">
+                                                        <small *ngIf="FirstName.errors?.required" class="text-danger"> First Name is required</small>
+                                                        <small *ngIf="FirstName.errors?.maxlength" class="text-danger"> First Name must be less than 128 characters</small> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label id="label">Last Name</label>
+                                                    <input type="text" name="lastname" id="txtlastname" [(ngModel)]="lastname" formControlName="lastname" 
+                                                    [class.is-invalid]="employeeForm.get('lastname').invalid && employeeForm.get('lastname').touched" 
+                                                    class="form-control form-control-sm text-left" placeholder="lastname" value="" required="">
+                                                    <div *ngIf="LastName.invalid || LastName.touched">
+                                                        <small *ngIf="LastName.errors?.required" class="text-danger"> Last Name is required</small>
+                                                        <small *ngIf="LastName.errors?.maxlength" class="text-danger"> Last Name must be less than 128 characters</small> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                              <div class="form-group">
+                                                <label id="label">Gender</label>
+                                                <select name="gender" id="gender" formControlName="gender" class="form-control form-control-sm text-left">
+                                                    <option *ngFor="let gender of genders" [value]="gender.id">{{ gender.name }}</option>
+                                                </select>
+                                                <div *ngIf="employeeForm.get('gender').invalid && employeeForm.get('gender').touched">
+                                                    <small class="text-danger">Gender is required</small>
+                                                  </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        <div class="row ">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label id="label">Address</label>
+                                                    <input type="text" name="address" id="txtaddress" [(ngModel)]="address" 
+                                                    [class.is-invalid]="employeeForm.get('address').invalid && employeeForm.get('address').touched"
+                                                    formControlName="address" class="form-control form-control-sm text-left" 
+                                                    placeholder="address" value="" required="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label id="label">Date Of Birth</label>
+                                                    <input type="text" name="dateofbirth" id="txtdateofbirth" [(ngModel)]="dateofbirth"
+                                                    [class.is-invalid]="employeeForm.get('dateofbirth').invalid && employeeForm.get('dateofbirth').touched"
+                                                    formControlName="dateofbirth" bsDatepicker [bsConfig]="datepickerConfig"
+                                                    class="form-control form-control-sm text-left" placeholder="dateofbirth" value="" required="">
+                                                    <div *ngIf="DateOfBirth.invalid || DateOfBirth.touched">
+                                                        <small *ngIf="DateOfBirth.errors?.required" class="text-danger"> Date of Birth is required</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                              <div class="form-group">
+                                                <label id="label">Department</label>
+                                                <select name="department" id="department" formControlName="departmentId" class="form-control form-control-sm text-left">
+                                                  <option *ngFor="let department of departments" [value]="department.id">{{ department.name}}</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        <div *ngIf="isBasicSalaryVisible()" class="row ">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label id="label">Basic Salary</label>
+                                                    <input *ngIf="showBasicSalary"type="number" name="basicsalary" id="txtbasicsalary" [(ngModel)]="basicsalary"
+                                                        formControlName="basicsalary" 
+                                                        [class.is-invalid]="employeeForm.get('basicsalary').invalid && employeeForm.get('basicsalary').touched"
+                                                        class="form-control form-control-sm text-left" placeholder="basicsalary" value="" required="">
+                                                    <div *ngIf="BasicSalary.invalid || BasicSalary.touched">
+                                                        <small *ngIf="BasicSalary.errors?.required" class="text-danger"> Basic Salary is required</small>
+                                                        <small *ngIf="BasicSalary.errors?.maxlength" class="text-danger"> Basic Salary must be less than 128 characters</small>
+                                                        <small *ngIf="BasicSalary.errors?.pattern" class="text-danger"> Basic Salary not valid</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="label">Show Basic Salary</label>
+                                            <input type="checkbox" formControlName="showBasicSalary" (change)="toggleBasicSalary()">
+                                        </div>
+                                        <input hidden="imagePath" formControlName="tempImgPath" name="tempImgPath">
+                                        <div class="row">
+                                            <div class="col-md-7"></div>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <div class="btn-toolbar pull-right" role="toolbar"
+                                                        aria-label="Toolbar with button groups">
+                                                        <div class="btn-group mr-2" role="group">
+                                                            <button type="button" class="btn btn-outline-dark "
+                                                                (click)="PostEmployee(employeeForm.value)" [disabled]="employeeForm.invalid">
+                                                                <i class="fa fa-save"></i>&nbsp; Save</button>
+                                                        </div>
+                                                        <div class="btn-group mr-2" role="group">
+                                                            <button type="button" class="btn btn-outline-dark"
+                                                                (click)="resetForm()">
+                                                                <i class="fa fa-trash"></i>&nbsp; Clear</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 order-md-1">
+                        <div class="card">
+                            <div class="card-body">
+                            <div class="row ">
+                                <div class="col-md-12">
+                                    <!-- <div class="form-group"> -->
+                                    <label id="label">Search</label>
+                                    <input #input (keyup)="SearchEmployeeDetails(input.value)" placeholder="search">
+                                    <!-- </div>   -->
+                                </div>
+                            </div>
+                            <!-- </form> -->
+                        <!-- </div> -->
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 order-md-1">
+                        <div class="card bg-light p-2">
+                        <div class="table-responsive">
+                        <!-- <form> -->
+                        <table class="table table-striped table-sm table-bordered">
+                            <!-- <table class="table table-hover table-fixed"> -->
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Emp ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Gender</th>
+                                    <th>DOB</th>
+                                    <th>Address</th>
+                                    <th>Department</th>
+                                    <th>Basic Salary</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let employee of employeeVM; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td style="width: 5%;">{{employee.id}}</td>
+                                    <td style="width: 15%;">{{employee.firstName}}</td>
+                                    <td style="width: 20%;">{{employee.lastName}}</td>
+                                    <td style="width: 5%;">{{GetGenderName(employee.gender)}}</td>
+                                    <td style="width: 10%;">{{employee.dateOfBirth| date:'dd/MM/yyyy'}}</td>
+                                    <td style="width: 20%;">{{employee.address}}</td>
+                                    <td style="width: 15%;">{{GetDepartmentName(employee.departmentId)}}</td>
+                                    <td style="width: 15%;" class="left-aligned">{{employee.basicSalary}}</td>
+                                    <td>
+                                        <img class="edit-icon" (click)="employeeDetailsToEdit(employee.id)"
+                                            style="width:12px; height:12px" src="../../assets/img/edit.svg" />
+                                    </td>
+                                    <td>
+                                        <img class="edit-icon" (click)="DeleteEmployee(employee.id)"
+                                            style="width:12px; height:12px" src="../../assets/img/delete.png" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- </form> -->
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer card bg-secondary" style="text-align:center; height :3rem">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="text-white">
+                            <h5>@2024 Copyright :</h5>
+                        </label>
+                        <label class="text-warning">
+                            <h5>www.accura-tech.uk</h5>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
